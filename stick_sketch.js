@@ -1,10 +1,24 @@
 function setup() {
 	createCanvas(500, 500);
 	background(0);
+	noStroke();
+
+	fill(255);
+  	arc(250, 150, 100, 100, PI, TWO_PI);
 
 	//head
 	fill(255);
 	ellipse(250, 150, 65, 65);
+
+	//eyes
+	fill(0);
+	ellipse(240, 150, 10, 10);
+	fill(0);
+	ellipse(260, 150, 10, 10);
+
+	//mouth
+	fill(0);
+	ellipse(250, 165, 20, 10);
 
 	//body
 	fill(255);
@@ -25,8 +39,6 @@ function setup() {
 	rect(345, 180, 30, 10);
 	fill(255);
 	rect(125, 265, 30, 10);
-
-
 
 	//legs
 	fill(255);
