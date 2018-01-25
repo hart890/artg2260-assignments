@@ -34,15 +34,18 @@ function setup() {
   	fill(0);
   	rect(0, 400, 500, 300);
 
-  	//mountains
-  	//triangle
-
   	//trees
   	fill(0);
   	rect(400, 340, 10, 60);
 
   	fill(0);
   	rect(450, 340, 10, 60);
+
+  	fill(0);
+  	triangle(405, 250, 380, 360, 430, 360); 
+
+  	fill(0);
+  	triangle(455, 250, 420, 360, 490, 360); 
 
 
 
