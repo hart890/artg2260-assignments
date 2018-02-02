@@ -1,19 +1,3 @@
-// function setup() {
-// 	createCanvas(500, 500);
-// 	background(0);
-// 	noStroke();
-
-// 	//for loop
-
-// 	//want circle
-// 	//var to change size
-// 	//something to handle clicking - change size 
-// 	//change color
-
-
-// }
-
-
 var tileSize = 20;
 
 randomSeed(int);
