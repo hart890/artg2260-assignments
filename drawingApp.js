@@ -1,7 +1,7 @@
 var weight = 1;
 
 function setup() {
-	createCanvas(500, 300);
+	createCanvas(500, 500);
 	background(0);
 	stroke(255);
 	strokeWeight(weight);
@@ -41,7 +41,7 @@ function keyPressed() {
 		strokeWeight(weight);
 	}
 	else if(key == 'c' || key == 'C'){
-		createCanvas(500, 300);
+		createCanvas(500, 500);
 		background(0);
 		stroke(255);
 		strokeWeight(weight);
