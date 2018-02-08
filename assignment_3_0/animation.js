@@ -12,7 +12,7 @@ function setup() {
 	}
 }
 
-// FIX
+//FIX: wanted endless for loop that keeps changing color
 
 function draw() {
 	//background
@@ -20,6 +20,9 @@ function draw() {
 	//g = map(frameCount, 0, 400, 255, 0);
 	b = map(frameCount, 0, 600, 255, 0);
 	background(r, 0, b);
+	// for(var i = 0; i < 255; i++) {
+
+	// }
 
 	for(var i = 0; i < dots.length; i++) {
 		dots[i].move();
