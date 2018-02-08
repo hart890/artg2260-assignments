@@ -12,12 +12,14 @@ function setup() {
 	}
 }
 
+// FIX
+
 function draw() {
 	//background
-	r = map(mouseX, 0, 600, 0, 255);
-	g = map(mouseY, 0, 400, 255, 0);
-	b = map(mouseX, 0, 600, 255, 0);
-	background(r, g, b);
+	r = map(frameCount, 0, 600, 0, 255);
+	//g = map(frameCount, 0, 400, 255, 0);
+	b = map(frameCount, 0, 600, 255, 0);
+	background(r, 0, b);
 
 	for(var i = 0; i < dots.length; i++) {
 		dots[i].move();
