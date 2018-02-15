@@ -5,7 +5,7 @@ var g = 0;
 var b = 0;
 
 function setup() {
-	createCanvas(600, 400);
+	createCanvas(400, 400);
 	//create objects
 	for (var i = 0; i < 50; i++) {
 		dots.push(new Wiggle());
