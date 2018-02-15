@@ -1,6 +1,6 @@
 var tileSize = 20;
 
-randomSeed(int);
+// randomSeed(int);
 
 
 function setup() {

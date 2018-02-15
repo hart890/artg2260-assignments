@@ -1,9 +1,13 @@
+.jumbotron {
+    background: linear-gradient(deepskyblue, aquamarine) !important;
+}
+
 body {
     background-color: white;
 }
 
 h1 {
-    color: navy !important;
+    color: white !important;
     margin-left: 20px;
     font-family: 'Lobster', cursive !important;
 }
