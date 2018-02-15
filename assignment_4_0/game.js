@@ -1,6 +1,4 @@
 
-// Make use of at least one class
-// Make use of at least one array of objects
 // Keep track of the score, and display the score as well as game play messages
 // Develop a compelling and original theme or aesthetic
 
@@ -11,15 +9,14 @@
 
 var s;
 var scl = 20;
-
 var food;
+var score = 0;
 
 function setup() {
   createCanvas(450, 450);
   s = new Snake();
-  frameRate(20);
+  frameRate(10);
   pickLocation();
-
 }
 
 function pickLocation() {
@@ -29,12 +26,16 @@ function pickLocation() {
   food.mult(scl);
 }
 
-function mousePressed() {
-  s.total++;
-}
+// function mousePressed() {
+//   s.total++;
+// }
 
 function draw() {
   background(0);
+
+  fill(255);
+  textSize(20);
+  text('Score = ' + score, 10, 30);
 
   if (s.eat(food)) {
     pickLocation();
@@ -72,6 +73,7 @@ function Snake() {
     var d = dist(this.x, this.y, pos.x, pos.y);
     if (d < 1) {
       this.total++;
+      score++;
       return true;
     } else {
       return false;
@@ -88,8 +90,17 @@ function Snake() {
       var pos = this.tail[i];
       var d = dist(this.x, this.y, pos.x, pos.y);
       if (d < 1) {
+      	// this.total = 0;
+       //  this.tail = [];
+    //   	background(0);
+    //   	fill(255);
+  		// noStroke();
+  		// textSize(72);
+  		// textAlign(CENTER, CENTER);
+  		// text("you lose!", width/2, height/2);
         console.log('starting over');
         this.total = 0;
+        score = 0;
         this.tail = [];
       }
     }
@@ -119,5 +130,6 @@ function Snake() {
 
   }
 }
+
 
 
