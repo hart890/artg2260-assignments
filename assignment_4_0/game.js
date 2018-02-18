@@ -1,12 +1,3 @@
-
-// Keep track of the score, and display the score as well as game play messages
-// Develop a compelling and original theme or aesthetic
-
-// intended steps: move snake with arrow keys
-// collect dots around screen, add to score 
-// until snake hits the edge of the screen/itself,
-// then end game.
-
 var s;
 var scl = 20;
 var food;
@@ -25,10 +16,6 @@ function pickLocation() {
   food = createVector(floor(random(cols)), floor(random(rows)));
   food.mult(scl);
 }
-
-// function mousePressed() {
-//   s.total++;
-// }
 
 function draw() {
   background(0);
@@ -90,14 +77,6 @@ function Snake() {
       var pos = this.tail[i];
       var d = dist(this.x, this.y, pos.x, pos.y);
       if (d < 1) {
-      	// this.total = 0;
-       //  this.tail = [];
-    //   	background(0);
-    //   	fill(255);
-  		// noStroke();
-  		// textSize(72);
-  		// textAlign(CENTER, CENTER);
-  		// text("you lose!", width/2, height/2);
         console.log('starting over');
         this.total = 0;
         score = 0;
