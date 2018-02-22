@@ -31,6 +31,11 @@ function draw() {
   s.update();
   s.show();
 
+  for (let i = 0; i < obs.length; i++) {
+    obs[i].grow();
+    obs[i].display();
+  }
+
 
   fill(0, 204, 204);
   rect(food.x, food.y, scl, scl);

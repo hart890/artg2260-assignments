@@ -1,140 +1,210 @@
-var s;
-var scl = 20;
 Y_AXIS = 1;
 var c1, c2;
-var obs;
+var scl = 20;
+var snake;
 var food;
+var obs = [];
 var score = 0;
 
-
 function setup() {
-	createCanvas(600, 450);
-	c1 = color(255, 0, 127);
-  	c2 = color(255, 145, 0);
+  createCanvas(scl * 30, scl * 20);
 
-	s = new Snake();
-	obs = new Obstacle();
-	pickLocation();
-}
+  c1 = color(255, 0, 127);
+  c2 = color(255, 145, 0);
 
-function pickLocation() {
-  var cols = floor(width/scl);
-  var rows = floor(height/scl);
-  food = createVector(floor(random(cols)), floor(random(rows)));
-  food.mult(scl);
+  snake = new Snake(1);
+  food  = new Food();
+
+  for (let i = 0; i < 2; i++) {
+    obs[i] = new Obstacle();
+  }
 }
 
 function draw() {
-	setGradient(0, 0, 600, 450, c1, c2, Y_AXIS);
-	//background(0);
-	noStroke();
+  setGradient(0, 0, 600, 450, c1, c2, Y_AXIS);
+  noStroke();
 
-	fill(255);
-  	textSize(20);
-  	text('Score = ' + score, 10, 30);
+  fill(255);
+  textSize(20);
+  text('Score = ' + score, 10, 30);
 
-	obs.move();
-	obs.show();
+  frameRate(constrain(snake.level * 6, 10, 40));
+  snake.eat(food);
+  snake.move();
+  snake.die();
+  snake.draw();
+  food.draw();
 
-	if (s.eat(food)) {
-    pickLocation();
+   for (let i = 0; i < obs.length; i++) {
+    obs[i].move();
+    obs[i].show();
   }
-  	s.death();
-  	s.update();
-  	s.show();
-  	
-  	fill(0, 204, 204);
-  	rect(food.x, food.y, scl, scl);
 }
 
 function keyPressed() {
   if (keyCode === UP_ARROW) {
-    s.dir(0, -1);
+    snake.dir(0, -1);
   } else if (keyCode === DOWN_ARROW) {
-    s.dir(0, 1);
+    snake.dir(0, 1);
   } else if (keyCode === RIGHT_ARROW) {
-    s.dir(1, 0);
+    snake.dir(1, 0);
   } else if (keyCode === LEFT_ARROW) {
-    s.dir(-1, 0);
+    snake.dir(-1, 0);
   }
 }
 
-function Snake() {
-  this.x = 0;
-  this.y = 0;
-  this.xspeed = 1;
-  this.yspeed = 0;
-  this.total = 0;
-  this.tail = [];
+function cols() {
+  return floor(width / scl);
+}
 
-  this.eat = function(pos) {
-    var d = dist(this.x, this.y, pos.x, pos.y);
-    if (d < 1) {
-      this.total++;
-      score++;
-      return true;
-    } else {
-      return false;
-    }
-  }
+function rows() {
+  return floor(height / scl);
+}
+
+function randomVector() {
+  return createVector(floor(random(cols())), floor(random(rows())));
+}
+
+
+////////////////////////////////////////////
+
+function Snake(level) {
+  this.level = level;
+
+  this.resetSnake = function() {
+    this.x = cols()/2 * scl;
+    this.y = rows()/2 * scl;
+    this.xspeed = -1;
+    this.yspeed = 0;
+    this.tail = [];
+    this.points = 0;
+    this.level = 1;
+  };
 
   this.dir = function(x, y) {
-    this.xspeed = x;
-    this.yspeed = y;
-  }
-
-  this.death = function() {
-    for (var i = 0; i < this.tail.length; i++) {
-      var pos = this.tail[i];
-      var d = dist(this.x, this.y, pos.x, pos.y);
-      if (d < 1) {
-        console.log('starting over');
-        this.total = 0;
-        score = 0;
-        this.tail = [];
-      }
+    // do not allow snake to go backwards
+    if (x != 0 && this.xspeed != x * (-1)
+        || y != 0 && this.yspeed != y * (-1)) {
+      this.xspeed = x;
+      this.yspeed = y;
     }
   }
 
-  this.update = function() {
-    for (var i = 0; i < this.tail.length - 1; i++) {
-      this.tail[i] = this.tail[i + 1];
+  this.levelUp = function() {
+    this.level = floor(this.points / 10) + 1;
+    console.log("level " + this.level);
+  }
+
+  this.eat = function(food) {
+    // head is on top of food?
+    if (this.x === food.x() && this.y === food.y()) {
+      food.eaten();
+      score++;
+      this.points++;
+      this.tail.push(createVector(this.x, this.y));
+      this.levelUp();
+      console.log(this.points + " points");
     }
-    if (this.total >= 1) {
-      this.tail[this.total - 1] = createVector(this.x, this.y);
+  }
+
+  this.die = function() {
+    // snake bit his own body?
+    var isDead = this.tail.some((square) => {
+      return square.x === this.x && square.y === this.y;
+    });
+
+    if (isDead) {
+      this.resetSnake();
+      score = 0;
+    }
+  }
+
+  this.move = function() {
+    // put last square of tail in front of the line
+    if (this.tail.length > 0) {
+      var tipOfTail = this.tail.pop();
+      tipOfTail.x = this.x;
+      tipOfTail.y = this.y;
+      this.tail.unshift(tipOfTail);
     }
 
-    this.x = this.x + this.xspeed * scl;
-    this.y = this.y + this.yspeed * scl;
+    // move head
+    this.x += this.xspeed * scl;
+    this.y += this.yspeed * scl;
+
+    // wrap around right and bottom edges
+    this.x %= width;
+    this.y %= height;
+
+    // wrap around left and top edges
+    if (this.x < 0) {
+      this.x = width - scl;
+    }
+    if (this.y < 0) {
+      this.y = height - scl;
+    }
 
     this.x = constrain(this.x, 0, width - scl);
     this.y = constrain(this.y, 0, height - scl);
   }
 
-  this.show = function() {
+  this.draw = function() {
+    // sets the 'brush' color
     fill(255);
-    for (var i = 0; i < this.tail.length; i++) {
+
+    // draws the head
+    rect(this.x, this.y, scl, scl);
+
+    // draws the tail
+    for(var i = 0; i < this.tail.length; i++) {
       rect(this.tail[i].x, this.tail[i].y, scl, scl);
     }
-    rect(this.x, this.y, 20, 20);
+  }
 
+  this.resetSnake();
+}
+
+////////////////////////////////////////////
+
+function Food() {
+  this.vec = randomVector().mult(scl);
+
+  this.x = function() {
+    return this.vec.x;
+  }
+
+  this.y = function() {
+    return this.vec.y;
+  }
+
+  this.draw = function() {
+    fill(0);
+    rect(this.x(), this.y(), scl, scl);
+  }
+
+  this.eaten = function() {
+    this.vec = randomVector().mult(scl);
   }
 }
 
+////////////////////////////////////////////
+
 function Obstacle() {
-	this.x = width;
-	this.y = 0;
-	this.height = random(100, 200);
-	this.speed = 5;
+  this.x = width;
+  this.y = 0;
+  this.height = random(100, 200);
+  this.speed = 5;
 
-	this.move = function() {
-		this.x -= this.speed;
-	}
+  this.move = function() {
+    this.x -= this.speed;
+  }
 
-	this.show = function() {
-		rect(this.x, this.y, 20, this.height);
-	}
+  this.show = function() {
+    rect(this.x, this.y, 20, this.height);
+  }
 }
+
+////////////////////////////////////////////
 
 //for background
 function setGradient(x, y, w, h, c1, c2, axis) {
