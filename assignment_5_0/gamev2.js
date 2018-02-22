@@ -3,8 +3,10 @@ var c1, c2;
 var scl = 20;
 var snake;
 var food;
-var obs = [];
 var score = 0;
+
+var obs;
+//var obs = [];
 
 function setup() {
   createCanvas(scl * 30, scl * 20);
@@ -15,9 +17,12 @@ function setup() {
   snake = new Snake(1);
   food  = new Food();
 
-  for (let i = 0; i < 2; i++) {
-    obs[i] = new Obstacle();
-  }
+  obs1 = new Obstacle();
+  obs2 = new Obstacle();
+
+  // for (let i = 0; i < 3 > 10; i++) {
+  //   obs[i] = new Obstacle();
+  // }
 }
 
 function draw() {
@@ -31,14 +36,22 @@ function draw() {
   frameRate(constrain(snake.level * 6, 10, 40));
   snake.eat(food);
   snake.move();
+  ///snake.hit(obs[i]);
   snake.die();
   snake.draw();
   food.draw();
 
-   for (let i = 0; i < obs.length; i++) {
-    obs[i].move();
-    obs[i].show();
-  }
+  obs1.move();
+  obs1.show();
+
+  obs2.move();
+  obs2.show();
+
+  //  for (let i = 0; i < obs.length + 1; i++) {
+  //   obs[i].move();
+  //   obs[i].show();
+  //   obs[i].hit(snake);
+  // }
 }
 
 function keyPressed() {
@@ -107,6 +120,14 @@ function Snake(level) {
     }
   }
 
+  // this.hit = function(obs) {
+  //   if (this.x === obs.x() && this.y === obs.y()) {
+  //     this.resetSnake();
+  //     score = 0;
+  //     this.points = 0;
+  //   }
+  // }
+
   this.die = function() {
     // snake bit his own body?
     var isDead = this.tail.some((square) => {
@@ -143,9 +164,6 @@ function Snake(level) {
     if (this.y < 0) {
       this.y = height - scl;
     }
-
-    this.x = constrain(this.x, 0, width - scl);
-    this.y = constrain(this.y, 0, height - scl);
   }
 
   this.draw = function() {
@@ -190,7 +208,7 @@ function Food() {
 ////////////////////////////////////////////
 
 function Obstacle() {
-  this.x = width;
+  this.x = random(width-100, width+800);
   this.y = 0;
   this.height = random(100, 200);
   this.speed = 5;
@@ -202,6 +220,22 @@ function Obstacle() {
   this.show = function() {
     rect(this.x, this.y, 20, this.height);
   }
+
+  // this.hit = function(snake) {
+  //   if(this.x === snake.x && this.y === snake.y) {
+  //     snake.resetSnake();
+  //      score = 0;
+  //      snake.points = 0;
+  //   }
+  // }
+
+    // this.hit = function(obs) {
+    // if (this.x === obs[i].x() && this.y === obs[i].y()) {
+    //   this.resetSnake();
+    //   score = 0;
+    //   this.points = 0;
+    // }
+  
 }
 
 ////////////////////////////////////////////
