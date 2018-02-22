@@ -3,15 +3,18 @@ var scl = 5;
 //Y_AXIS = 1;
 //var c1, c2;
 var obs;
+var food;
 var score = 0;
+
 
 function setup() {
 	createCanvas(600, 450);
 	//c1 = color(255, 0, 127);
   	//c2 = color(255, 145, 0);
+
 	s = new Snake();
 	obs = new Obstacle();
-
+	pickLocation();
 }
 
 function draw() {
