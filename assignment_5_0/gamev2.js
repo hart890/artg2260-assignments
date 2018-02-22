@@ -5,8 +5,7 @@ var snake;
 var food;
 var score = 0;
 
-var obs;
-//var obs = [];
+var obs = [];
 
 function setup() {
   createCanvas(scl * 30, scl * 20);
@@ -17,12 +16,9 @@ function setup() {
   snake = new Snake(1);
   food  = new Food();
 
-  obs1 = new Obstacle();
-  obs2 = new Obstacle();
-
-  // for (let i = 0; i < 3 > 10; i++) {
-  //   obs[i] = new Obstacle();
-  // }
+  for (let i = 0; i < 900; i++) {
+    obs[i] = new Obstacle();
+  }
 }
 
 function draw() {
@@ -41,17 +37,18 @@ function draw() {
   snake.draw();
   food.draw();
 
-  obs1.move();
-  obs1.show();
+  // obs1.move();
+  // obs1.show();
 
-  obs2.move();
-  obs2.show();
+  // obs2.move();
+  // obs2.show();
 
-  //  for (let i = 0; i < obs.length + 1; i++) {
-  //   obs[i].move();
-  //   obs[i].show();
-  //   obs[i].hit(snake);
-  // }
+ 
+ for (let i = 0; i < obs.length; i++) {
+    obs[i].move();
+    obs[i].show();
+ }
+
 }
 
 function keyPressed() {
@@ -208,7 +205,7 @@ function Food() {
 ////////////////////////////////////////////
 
 function Obstacle() {
-  this.x = random(width-100, width+800);
+  this.x = random(0, width);
   this.y = 0;
   this.height = random(100, 200);
   this.speed = 5;
@@ -229,12 +226,8 @@ function Obstacle() {
   //   }
   // }
 
-    // this.hit = function(obs) {
-    // if (this.x === obs[i].x() && this.y === obs[i].y()) {
-    //   this.resetSnake();
-    //   score = 0;
-    //   this.points = 0;
-    // }
+    //removing object from array
+    //after hitting left of screen
   
 }
 
