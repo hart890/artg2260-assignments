@@ -6,6 +6,7 @@ var food;
 var score = 0;
 
 var obs = [];
+obs.push(new Obstacle());
 
 function setup() {
   createCanvas(scl * 30, scl * 20);
@@ -16,9 +17,9 @@ function setup() {
   snake = new Snake(1);
   food  = new Food();
 
-  for (let i = 0; i < 900; i++) {
-    obs[i] = new Obstacle();
-  }
+  // for (let i = 0; i < 900; i++) {
+  //   obs[i] = new Obstacle();
+  // }
 }
 
 function draw() {
@@ -37,6 +38,12 @@ function draw() {
   snake.draw();
   food.draw();
 
+  for (var i = 0; i < obs.length; i++) {
+    obs[i].show();
+    obs[i].update();
+
+  }
+
   // obs1.move();
   // obs1.show();
 
@@ -44,10 +51,10 @@ function draw() {
   // obs2.show();
 
  
- for (let i = 0; i < obs.length; i++) {
-    obs[i].move();
-    obs[i].show();
- }
+ // for (let i = 0; i < obs.length; i++) {
+ //    obs[i].move();
+ //    obs[i].show();
+ // }
 
 }
 
@@ -205,18 +212,38 @@ function Food() {
 ////////////////////////////////////////////
 
 function Obstacle() {
-  this.x = random(0, width);
-  this.y = 0;
-  this.height = random(100, 200);
+  this.top = random(height/2);
+  this.bottom = random(height/2);
+  this.x = width;
+  this.w = 20;
   this.speed = 5;
 
-  this.move = function() {
+  this.show = function() {
+    fill(0);
+    rect(this.x, 0, this.w, this.top);
+    rect(this.x, height-this.bottom, this.w, this.bottom);
+  }
+
+  this.update = function() {
     this.x -= this.speed;
   }
 
-  this.show = function() {
-    rect(this.x, this.y, 20, this.height);
-  }
+}
+
+
+// function Obstacle() {
+//   this.x = random(0, width);
+//   this.y = 0;
+//   this.height = random(100, 200);
+//   this.speed = 5;
+
+//   this.move = function() {
+//     this.x -= this.speed;
+//   }
+
+//   this.show = function() {
+//     rect(this.x, this.y, 20, this.height);
+//   }
 
   // this.hit = function(snake) {
   //   if(this.x === snake.x && this.y === snake.y) {
@@ -228,8 +255,6 @@ function Obstacle() {
 
     //removing object from array
     //after hitting left of screen
-  
-}
 
 ////////////////////////////////////////////
 
