@@ -1,10 +1,9 @@
-// //include forces, transformations, and new class(es)
-// //Use of transformations with push() and pop()
-// //forces -- gravity
-
+//Game v3
 
 var bird;
-var pipes = [];
+var obs = [];
+var food;
+var scl = 20;
 var score = 0;
 
 
@@ -12,45 +11,73 @@ function setup() {
 	createCanvas(400, 600);
 
 	bird = new Bird();
-	pipes.push(new Pipe());
+	food  = new Food();
+	obs.push(new Obstacle());
 }
 
 function draw() {
 
 
-	background(218, 11, 211);
+	background(188, 0, 202);
 
 	//background
+	//sunset
 	fill(255, 0, 127);
-	rect(0, 70, width, height-30);
-
-	fill(255, 128, 0);
+	rect(0, 300, width, height-30);
+	fill(255, 0, 127, 90);
 	rect(0, 200, width, height-30);
+	fill(255, 0, 127, 80);
+	rect(0, 100, width, height-30);
+
+	//sun
+	fill(255, 255, 0);
+	ellipse(120, 470, 50, 50);
+	fill(255, 255, 0, 98);
+	ellipse(120, 470, 70, 70);
+	fill(255, 255, 0, 96);
+	ellipse(120, 470, 90, 90);
+	fill(255, 255, 0, 94);
+	ellipse(120, 470, 110, 110);
+	fill(255, 255, 0, 92);
+	ellipse(120, 470, 150, 150);
+	fill(255, 255, 0, 90);
+	ellipse(120, 470, 190, 190);
+	fill(255, 255, 0, 88);
+	ellipse(120, 470, 280, 280);
+
+	//mountains
+	fill(32, 32, 32, 95);
+	triangle(-30,height,150,height,60,530);
+	triangle(110,height,width+30,height,270,500);
+	triangle(160,height,width+90,height,340,510);
 
 
 	fill(0);
-	ellipse(100, height, 300, 100, 10);
-	ellipse(300, height, 300, 150, 10);
+	triangle(0,height,160,height,80,540);
+	triangle(30,height,190,height,110,550);
+	triangle(140,height,width+60,height,300,500);
 
-	for (var i = pipes.length-1; i >= 0; i--) {
-		pipes[i].show();
-		pipes[i].update();
 
-		if (pipes[i].hits(bird)) {
+	for (var i = obs.length-1; i >= 0; i--) {
+		obs[i].show();
+		obs[i].update();
+
+		if (obs[i].hits(bird)) {
 			console.log("HIT");
 		}
 
-		if (pipes[i].offscreen()) {
-			pipes.splice(i, 1); //delete from array
+		if (obs[i].offscreen()) {
+			obs.splice(i, 1); //delete from array
 		}
 	}
 
 	bird.update();
 	bird.show();
+	food.draw();
 
 	//every 100 frames
 	if (frameCount % 100 == 0) {
-		pipes.push(new Pipe());
+		obs.push(new Obstacle());
 	}
 
 	fill(0);
@@ -62,6 +89,18 @@ function keyPressed() {
 	if (key == ' ') {
 		bird.up();
 	}
+}
+
+function cols() {
+  return floor(width / scl);
+}
+
+function rows() {
+  return floor(height / scl);
+}
+
+function randomVector() {
+  return createVector(floor(random(cols())), floor(random(rows())));
 }
 
 function Bird() {
@@ -99,9 +138,9 @@ function Bird() {
 	}
 }
 
-function Pipe() {
-	this.top = random(height/2);
-	this.bottom = random(height/2);
+function Obstacle() {
+	this.top = random(height/2-30);
+	this.bottom = random(height/2-30);
 	this.x = width;
 	this.w = 20;
 	this.speed = 2;
@@ -126,10 +165,31 @@ function Pipe() {
 		this.x -= this.speed;
 	}
 
-	//checks if pipe is offscreen
+	//checks if obstacle is offscreen
 	this.offscreen = function() {
 		return this.x < -this.w;
 	}
+}
+
+function Food() {
+  this.vec = randomVector().mult(scl);
+
+  this.x = function() {
+    return this.vec.x;
+  }
+
+  this.y = function() {
+    return this.vec.y;
+  }
+
+  this.draw = function() {
+    fill(0);
+    rect(this.x(), this.y(), scl, scl);
+  }
+
+  this.eaten = function() {
+    this.vec = randomVector().mult(scl);
+  }
 }
 
 
