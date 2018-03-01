@@ -1,26 +1,26 @@
 //Game v3
 
+//goal: add food + use overlap checker
+//have food move with obs
+
 var bird;
 var obs = [];
-var food;
 var scl = 20;
 var score = 0;
+var food;
 
 
 function setup() {
 	createCanvas(400, 600);
 
 	bird = new Bird();
-	food  = new Food();
+	food = new Food();
 	obs.push(new Obstacle());
 }
 
 function draw() {
-
-
 	background(188, 0, 202);
 
-	//background
 	//sunset
 	fill(255, 0, 127);
 	rect(0, 300, width, height-30);
@@ -50,8 +50,6 @@ function draw() {
 	triangle(-30,height,150,height,60,530);
 	triangle(110,height,width+30,height,270,500);
 	triangle(160,height,width+90,height,340,510);
-
-
 	fill(0);
 	triangle(0,height,160,height,80,540);
 	triangle(30,height,190,height,110,550);
@@ -73,7 +71,8 @@ function draw() {
 
 	bird.update();
 	bird.show();
-	food.draw();
+	food.show();
+	food.update();
 
 	//every 100 frames
 	if (frameCount % 100 == 0) {
@@ -91,18 +90,6 @@ function keyPressed() {
 	}
 }
 
-function cols() {
-  return floor(width / scl);
-}
-
-function rows() {
-  return floor(height / scl);
-}
-
-function randomVector() {
-  return createVector(floor(random(cols())), floor(random(rows())));
-}
-
 function Bird() {
 	this.y = height/2;
 	this.x = 64;
@@ -114,7 +101,7 @@ function Bird() {
 	this.show = function() {
 		fill(255);
 		noStroke();
-		ellipse(this.x, this.y, 16, 16)
+		ellipse(this.x, this.y, 16, 16);
 	}
 
 	this.up = function() {
@@ -172,24 +159,32 @@ function Obstacle() {
 }
 
 function Food() {
-  this.vec = randomVector().mult(scl);
+	this.x = width+100;
+	this.y = random(50, 550);
+	this.w = 20;
+	this.speed = 2;
 
-  this.x = function() {
-    return this.vec.x;
-  }
+	this.show = function() {
+		fill(0);
+		noStroke();
+		ellipse(this.x, 100, 16, 16);
+	}
 
-  this.y = function() {
-    return this.vec.y;
-  }
+	this.update = function() {
+		this.x -= this.speed;
+	}
 
-  this.draw = function() {
-    fill(0);
-    rect(this.x(), this.y(), scl, scl);
-  }
+	this.overlap = function(bird) {
+		let d = dist(other.x, other.y, this.x, this.y);
+		if( d < this.diameter/2 + other.diameter/2){
+			return true;
+		} else{
+			return false;
+		}
 
-  this.eaten = function() {
-    this.vec = randomVector().mult(scl);
-  }
+	}
+
 }
+
 
 
