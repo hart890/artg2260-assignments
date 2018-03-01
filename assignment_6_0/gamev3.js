@@ -24,6 +24,8 @@ function draw() {
 		startScreen();
 	}
 	else if (gameState == 1){
+		//score = 0;
+
 		background(188, 0, 202);
 		noStroke();
 		//sunset
@@ -150,11 +152,12 @@ function keyPressed() {
 		//score = 0;
 		gameState = 1;
 	}
-	else if(gameState = 1) {
+	else if(gameState == 1) {
 		bird.up();
 	}
 	else if (gameState == 2 && key == ' '){
-   		gameState = 1;
+   		gameState = 0;
+   		//score = 0;
  	}
 }
 
