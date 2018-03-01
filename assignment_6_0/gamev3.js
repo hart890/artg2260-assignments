@@ -116,6 +116,11 @@ function draw() {
 }
 
 function startScreen(){
+  obs = [];
+  //food = [];
+  var score = 0;
+  var lives = 3;
+
   background(255, 255, 0);
   fill(0);
   textSize(18);
@@ -125,11 +130,6 @@ function startScreen(){
   textAlign(CENTER);
   text("Keep pressing SPACE to keep bird afloat,", width/2, height/2+100);
   text("collect food, and avoid obstacles!", width/2, height/2+130);
-
-  obs = [];
-  //food = [];
-  var score = 0;
-  var lives = 3;
 }
 
 function gameOver(){
@@ -143,12 +143,13 @@ function gameOver(){
 
   obs = [];
   //food = [];
-  //var score = 0;
-  var lives = 3;
+  //score = 0;
+  //lives = 3;
 }
 
 function keyPressed() {
 	if (gameState == 0 && key == ' ') {
+		//score = 0;
 		gameState = 1;
 	}
 	else if(gameState = 1) {
