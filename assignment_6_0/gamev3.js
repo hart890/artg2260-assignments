@@ -1,22 +1,21 @@
 //Game v3
 
-//goal: add food + use overlap checker
-//have food move with obs
-
 var gameState = 0;
 
 var bird;
 var obs = [];
 var scl = 20;
 var score = 0;
-var food;
+var lives = 3;
+var food = [];
 
 
 function setup() {
 	createCanvas(400, 600);
 
 	bird = new Bird();
-	food = new Food();
+	//food = new Food();
+	food.push(new Food());
 	obs.push(new Obstacle());
 }
 
@@ -24,71 +23,96 @@ function draw() {
 	if (gameState == 0) {
 		startScreen();
 	}
-	else {
+	else if (gameState == 1){
 		background(188, 0, 202);
+		noStroke();
+		//sunset
+		fill(255, 0, 127);
+		rect(0, 300, width, height-30);
+		fill(255, 0, 127, 90);
+		rect(0, 200, width, height-30);
+		fill(255, 0, 127, 80);
+		rect(0, 100, width, height-30);
 
-	//sunset
-	fill(255, 0, 127);
-	rect(0, 300, width, height-30);
-	fill(255, 0, 127, 90);
-	rect(0, 200, width, height-30);
-	fill(255, 0, 127, 80);
-	rect(0, 100, width, height-30);
+		//sun
+		fill(255, 255, 0);
+		ellipse(120, 470, 50, 50);
+		fill(255, 255, 0, 98);
+		ellipse(120, 470, 70, 70);
+		fill(255, 255, 0, 96);
+		ellipse(120, 470, 90, 90);
+		fill(255, 255, 0, 94);
+		ellipse(120, 470, 110, 110);
+		fill(255, 255, 0, 92);
+		ellipse(120, 470, 150, 150);
+		fill(255, 255, 0, 90);
+		ellipse(120, 470, 190, 190);
+		fill(255, 255, 0, 88);
+		ellipse(120, 470, 280, 280);
 
-	//sun
-	fill(255, 255, 0);
-	ellipse(120, 470, 50, 50);
-	fill(255, 255, 0, 98);
-	ellipse(120, 470, 70, 70);
-	fill(255, 255, 0, 96);
-	ellipse(120, 470, 90, 90);
-	fill(255, 255, 0, 94);
-	ellipse(120, 470, 110, 110);
-	fill(255, 255, 0, 92);
-	ellipse(120, 470, 150, 150);
-	fill(255, 255, 0, 90);
-	ellipse(120, 470, 190, 190);
-	fill(255, 255, 0, 88);
-	ellipse(120, 470, 280, 280);
-
-	//mountains
-	fill(32, 32, 32, 95);
-	triangle(-30,height,150,height,60,530);
-	triangle(110,height,width+30,height,270,500);
-	triangle(160,height,width+90,height,340,510);
-	fill(0);
-	triangle(0,height,160,height,80,540);
-	triangle(30,height,190,height,110,550);
-	triangle(140,height,width+60,height,300,500);
+		//mountains
+		fill(32, 32, 32, 95);
+		triangle(-30,height,150,height,60,530);
+		triangle(110,height,width+30,height,270,500);
+		triangle(160,height,width+90,height,340,510);
+		fill(0);
+		triangle(0,height,160,height,80,540);
+		triangle(30,height,190,height,110,550);
+		triangle(140,height,width+60,height,300,500);
 
 
-	for (var i = obs.length-1; i >= 0; i--) {
-		obs[i].show();
-		obs[i].update();
+		for (var i = obs.length-1; i >= 0; i--) {
+			obs[i].show();
+			obs[i].update();
 
-		if (obs[i].hits(bird)) {
-			console.log("HIT");
+			if (obs[i].hits(bird)) {
+				console.log("HIT");
+				lives -= 1;
+
+				if (lives <= 0) {
+					gameState = 2;
+				}
+			}
+
+			if (obs[i].offscreen()) {
+				obs.splice(i, 1); //delete from array
+			}
 		}
 
-		if (obs[i].offscreen()) {
-			obs.splice(i, 1); //delete from array
+		for (var i = food.length-1; i >= 0; i--) {
+			food[i].show();
+			food[i].update();
+
+			if (bird.overlap(food[i])) {
+				console.log("munch");
+				score++;
+				food.splice(i, 1);
+				food.push(new Food());
+			}
+
+			if (food[i].offscreen()) {
+				food.splice(i, 1); //delete from array
+				food.push(new Food());
+			}
 		}
-	}
 
-	bird.update();
-	bird.show();
-	food.show();
-	food.update();
 
-	//every 100 frames
-	if (frameCount % 100 == 0) {
-		obs.push(new Obstacle());
-	}
 
-	fill(0);
-  	textSize(18);
-  	text('Score = ' + score, 10, 30);
+		bird.update();
+		bird.show();
+
+		//every 100 frames
+		if (frameCount % 100 == 0) {
+			obs.push(new Obstacle());
+		}
+
+		fill(0);
+	  	textSize(18);
+	  	text('Score = ' + score, 50, 30);
 	}
+	else if (gameState == 2) {
+    	gameOver();
+  	}
 }
 
 function startScreen(){
@@ -103,6 +127,24 @@ function startScreen(){
   text("collect food, and avoid obstacles!", width/2, height/2+130);
 
   obs = [];
+  //food = [];
+  var score = 0;
+  var lives = 3;
+}
+
+function gameOver(){
+  background(255, 255, 0);
+  fill(0);
+  textSize(18);
+  textAlign(CENTER);
+  text("GAME OVER", width/2, height/2);
+  text("Score: " + score, width/2, height/2+100);
+  text("Press SPACE to play again", width/2, height/2+130);
+
+  obs = [];
+  //food = [];
+  //var score = 0;
+  var lives = 3;
 }
 
 function keyPressed() {
@@ -112,11 +154,15 @@ function keyPressed() {
 	else if(gameState = 1) {
 		bird.up();
 	}
+	else if (gameState == 2 && key == ' '){
+   		gameState = 1;
+ 	}
 }
 
 function Bird() {
 	this.y = height/2;
 	this.x = 64;
+	this.diameter = 20;
 
 	this.gravity = 0.6;
 	this.lift = -15;
@@ -125,7 +171,7 @@ function Bird() {
 	this.show = function() {
 		fill(255);
 		noStroke();
-		ellipse(this.x, this.y, 16, 16);
+		ellipse(this.x, this.y, this.diameter, this.diameter);
 	}
 
 	this.up = function() {
@@ -146,6 +192,17 @@ function Bird() {
 			this.y = 0;
 			this.veloctiy = 0;
 		}
+	}
+
+	this.overlap = function(food) {
+		let d = dist(this.x, this.y, food.x, food.y);
+
+		if(d <= food.diameter/2 + this.diameter/2){
+			return true;
+		} else {
+			return false;
+		}
+
 	}
 }
 
@@ -183,31 +240,26 @@ function Obstacle() {
 }
 
 function Food() {
-	this.x = width+100;
+	this.x = width+250;
 	this.y = random(50, 550);
 	this.w = 20;
 	this.speed = 2;
+	this.diameter = 20;
 
 	this.show = function() {
 		fill(0);
 		noStroke();
-		ellipse(this.x, 100, 16, 16);
+		ellipse(this.x, this.y, this.diameter, this.diameter);
 	}
 
 	this.update = function() {
 		this.x -= this.speed;
 	}
 
-	this.overlap = function(bird) {
-		let d = dist(other.x, other.y, this.x, this.y);
-		if( d < this.diameter/2 + other.diameter/2){
-			return true;
-		} else{
-			return false;
-		}
-
+	//checks if obstacle is offscreen
+	this.offscreen = function() {
+		return this.x < 0;
 	}
-
 }
 
 
