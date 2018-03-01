@@ -3,6 +3,8 @@
 //goal: add food + use overlap checker
 //have food move with obs
 
+var gameState = 0;
+
 var bird;
 var obs = [];
 var scl = 20;
@@ -19,7 +21,11 @@ function setup() {
 }
 
 function draw() {
-	background(188, 0, 202);
+	if (gameState == 0) {
+		startScreen();
+	}
+	else {
+		background(188, 0, 202);
 
 	//sunset
 	fill(255, 0, 127);
@@ -82,10 +88,28 @@ function draw() {
 	fill(0);
   	textSize(18);
   	text('Score = ' + score, 10, 30);
+	}
+}
+
+function startScreen(){
+  background(255, 255, 0);
+  fill(0);
+  textSize(18);
+  textAlign(CENTER);
+  text("Press SPACE to Begin", width/2, height/2);
+
+  textAlign(CENTER);
+  text("Keep pressing SPACE to keep bird afloat,", width/2, height/2+100);
+  text("collect food, and avoid obstacles!", width/2, height/2+130);
+
+  obs = [];
 }
 
 function keyPressed() {
-	if (key == ' ') {
+	if (gameState == 0 && key == ' ') {
+		gameState = 1;
+	}
+	else if(gameState = 1) {
 		bird.up();
 	}
 }
