@@ -84,7 +84,7 @@ function draw() {
 			food[i].update();
 
 			if (bird.overlap(food[i])) {
-				console.log("munch");
+				console.log("MUNCH");
 				score++;
 				food.splice(i, 1);
 				food.push(new Food());
@@ -96,8 +96,6 @@ function draw() {
 			}
 		}
 
-
-
 		bird.update();
 		bird.show();
 
@@ -108,7 +106,7 @@ function draw() {
 
 		fill(0);
 	  	textSize(18);
-	  	text('Score = ' + score, 50, 30);
+	  	text('score = ' + score, 50, 30);
 	}
 	else if (gameState == 2) {
     	gameOver();
@@ -118,17 +116,17 @@ function draw() {
 function startScreen(){
   obs = [];
   //food = [];
-  var score = 0;
-  var lives = 3;
+  score = 0;
+  lives = 3;
 
   background(255, 255, 0);
   fill(0);
   textSize(18);
   textAlign(CENTER);
-  text("Press SPACE to Begin", width/2, height/2);
+  text("press SPACE to begin", width/2, height/2);
 
   textAlign(CENTER);
-  text("Keep pressing SPACE to keep bird afloat,", width/2, height/2+100);
+  text("keep pressing SPACE to keep bird afloat,", width/2, height/2+100);
   text("collect food, and avoid obstacles!", width/2, height/2+130);
 }
 
@@ -138,8 +136,8 @@ function gameOver(){
   textSize(18);
   textAlign(CENTER);
   text("GAME OVER", width/2, height/2);
-  text("Score: " + score, width/2, height/2+100);
-  text("Press SPACE to play again", width/2, height/2+130);
+  text("score: " + score, width/2, height/2+100);
+  text("press SPACE to play again", width/2, height/2+130);
 
   obs = [];
   //food = [];
