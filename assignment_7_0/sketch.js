@@ -18,9 +18,17 @@ function setup() {
   userInput.changed(startSearch);
   //goWiki(userInput.value());
 
+  // createCanvas(600,500);
+  // background(0);
+
   function startSearch() {
     counter = 0;
     goWiki(userInput.value());
+  }
+
+  function draw(title){
+  	createDiv(title);
+
   }
 
   function goWiki(term) {
@@ -38,8 +46,9 @@ function setup() {
     let len = data[1].length;
     let index = floor(random(len));
     let title = data[1][index];
-    title = title.replace(/\s+/g, '_');
-    createDiv(title);
+    //title = title.replace(/\s+/g, '_');
+    //createDiv(title);
+    draw(title);
     console.log('Querying: ' + title);
     let url = contentUrl + title;
     loadJSON(url, gotContent, 'jsonp');
