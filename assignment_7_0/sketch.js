@@ -1,10 +1,3 @@
-// Daniel Shiffman
-// http://codingtra.in
-// http://patreon.com/codingtrain
-
-// Wikipedia
-// Edited Video: https://youtu.be/RPz75gcHj18
-
 let searchUrl = 'https://en.wikipedia.org/w/api.php?action=opensearch&format=json&search=';
 let contentUrl = 'https://en.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=content&format=json&titles=';
 
@@ -18,8 +11,8 @@ function setup() {
   userInput.changed(startSearch);
   //goWiki(userInput.value());
 
-  // createCanvas(600,500);
-  // background(0);
+  createCanvas(600,500);
+  background(0);
 
   function startSearch() {
     counter = 0;
@@ -27,7 +20,17 @@ function setup() {
   }
 
   function draw(title){
-  	createDiv(title);
+  	let wordX = random(width-100);
+  	let wordY = random(height-100);
+
+  	let r = random(0, 255);
+  	let g = random(0, 255);
+  	let b = random(0, 255);
+
+  	//createDiv(title);
+  	fill(r, g, b);
+  	textSize(random(8, 20));
+  	text(title, wordX, wordY);
 
   }
 
