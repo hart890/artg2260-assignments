@@ -12,7 +12,7 @@ function setup() {
   //goWiki(userInput.value());
 
   createCanvas(600,500);
-  background(0);
+  background(255);
 
   function startSearch() {
     counter = 0;
@@ -20,16 +20,18 @@ function setup() {
   }
 
   function draw(title){
-  	let wordX = random(width-100);
-  	let wordY = random(height-100);
+  	let wordX = random(50, width-50);
+  	let wordY = random(10, height-10);
 
   	let r = random(0, 255);
   	let g = random(0, 255);
   	let b = random(0, 255);
 
   	//createDiv(title);
-  	fill(r, g, b);
-  	textSize(random(8, 20));
+  	fill(r, g, b, 150);
+  	textFont("Impact");
+  	textSize(random(10, 30));
+  	textAlign(CENTER);
   	text(title, wordX, wordY);
 
   }
