@@ -1,3 +1,5 @@
+//base code from Daniel Shiffman tutorial
+
 let searchUrl = 'https://en.wikipedia.org/w/api.php?action=opensearch&format=json&search=';
 let contentUrl = 'https://en.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=content&format=json&titles=';
 
@@ -22,18 +24,15 @@ function setup() {
   function draw(title){
   	let wordX = random(50, width-50);
   	let wordY = random(10, height-10);
-
   	let r = random(0, 255);
   	let g = random(0, 255);
   	let b = random(0, 255);
 
-  	//createDiv(title);
   	fill(r, g, b, 150);
   	textFont("Impact");
   	textSize(random(10, 30));
   	textAlign(CENTER);
   	text(title, wordX, wordY);
-
   }
 
   function goWiki(term) {
