@@ -1,14 +1,8 @@
-
-//analyze()
-//input()
-
-//pause()
-
-
 var song;
 
 function preload() {
 	song = loadSound("Real Love Baby.mp3");
+	img = loadImage("misty.psd");
 }
 
 function setup() {
@@ -31,12 +25,12 @@ function setup() {
 
 
 function draw() {
-	background(0);
+	background(255, 204, 255);
 
-	fill(255);
+	fill(0);
+	noStroke();
 	var level = amp.getLevel();
 	var size = map(level, 0, 1, 0, 200);
-	ellipse(width/2, height/2, size, size);
+	image(img, size, size);
+	//ellipse(width/2, height/2, size, size);
 }
-
-//bubble object?
