@@ -87,24 +87,6 @@ function draw() {
 		fill(255, 0, 127);
 		ellipse(x, y, size, size);
 	}
-
-
-
-	// for(var i = 0; i < 100; i++) {
-
-	// 	for(var j = 0; j < 4; j++) {
-	// 		noStroke();
-	// 		fill(c[j]);
-	// 	}
-
-	// 	//fill(c.random());
-	// 	ellipse(x, y, size, size);
-
-	// 	//resets
-	// 	x = random(0, width);
-	// 	y = random(0, height);
-
-	// }
 }
 
 
