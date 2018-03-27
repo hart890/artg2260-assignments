@@ -2,7 +2,7 @@ var song;
 
 function preload() {
 	song = loadSound("Real Love Baby.mp3");
-	img = loadImage("misty.psd");
+	//img = loadImage("misty.jpg");
 }
 
 function setup() {
@@ -27,10 +27,10 @@ function setup() {
 function draw() {
 	background(255, 204, 255);
 
-	fill(0);
+	fill(0, 0, 204);
 	noStroke();
 	var level = amp.getLevel();
 	var size = map(level, 0, 1, 0, 200);
-	image(img, size, size);
-	//ellipse(width/2, height/2, size, size);
+	//image(img, size, size);
+	ellipse(width/2, height/2, size, size);
 }
