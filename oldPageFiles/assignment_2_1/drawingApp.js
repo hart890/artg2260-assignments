@@ -1,8 +1,48 @@
 var weight = 1;
 
+
 function setup() {
-	createCanvas(500, 500);
+	createCanvas(windowWidth, windowHeight);
 	background(0);
+
+	fill(255, 255, 255);
+	textSize(24);
+	text('Drawing App', 10, 30);
+	fill(255, 255, 255);
+	textSize(18);
+	text('Key:', 10, 60);
+	fill(255, 255, 255);
+	textSize(18);
+	text('c = clear canvas', 10, 90);
+	fill(255, 255, 255);
+	textSize(18);
+	text('s = save drawing', 10, 120);
+	fill(255, 255, 255);
+	textSize(18);
+	text('left/right arrows = change stroke weight', 10, 150);
+	fill(255, 255, 255);
+	textSize(18);
+	text('Colors:', 10, 180);
+	fill(255, 255, 255);
+	textSize(18);
+	text('w = white', 10, 210);
+	fill(255, 255, 255);
+	textSize(18);
+	text('b = blue', 10, 240);
+	fill(255, 255, 255);
+	textSize(18);
+	text('p = pink', 10, 270);
+	fill(255, 255, 255);
+	textSize(18);
+	text('y = yellow', 10, 300);
+	fill(255, 255, 255);
+	textSize(18);
+	text('g = green', 10, 330);
+	fill(255, 255, 255);
+	textSize(18);
+	text('v = violet', 10, 360);
+	fill(255, 255, 255);
+
 	stroke(255);
 	strokeWeight(weight);
 }
@@ -41,10 +81,49 @@ function keyPressed() {
 		strokeWeight(weight);
 	}
 	else if(key == 'c' || key == 'C'){
-		createCanvas(500, 500);
-		background(0);
-		stroke(255);
-		strokeWeight(weight);
+	createCanvas(windowWidth, windowHeight);
+	background(0);
+
+	fill(255, 255, 255);
+	textSize(24);
+	text('Drawing App', 10, 30);
+	fill(255, 255, 255);
+	textSize(18);
+	text('Key:', 10, 60);
+	fill(255, 255, 255);
+	textSize(18);
+	text('c = clear canvas', 10, 90);
+	fill(255, 255, 255);
+	textSize(18);
+	text('s = save drawing', 10, 120);
+	fill(255, 255, 255);
+	textSize(18);
+	text('left/right arrows = change stroke weight', 10, 150);
+	fill(255, 255, 255);
+	textSize(18);
+	text('Colors:', 10, 180);
+	fill(255, 255, 255);
+	textSize(18);
+	text('w = white', 10, 210);
+	fill(255, 255, 255);
+	textSize(18);
+	text('b = blue', 10, 240);
+	fill(255, 255, 255);
+	textSize(18);
+	text('p = pink', 10, 270);
+	fill(255, 255, 255);
+	textSize(18);
+	text('y = yellow', 10, 300);
+	fill(255, 255, 255);
+	textSize(18);
+	text('g = green', 10, 330);
+	fill(255, 255, 255);
+	textSize(18);
+	text('v = violet', 10, 360);
+	fill(255, 255, 255);
+
+	stroke(255);
+	strokeWeight(weight);
 	}
 	else if(key == 's' || key == 'S'){
 		saveCanvas('myCanvas');
